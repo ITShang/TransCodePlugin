@@ -1,0 +1,9 @@
+<plugin name=\"RG_TC_Plugin\" version=\"0.0.1\" compatVersion=\"0.0.1\">
+    <vendor>RGCompany</vendor>
+    <copyright>(C) RGCompany</copyright>
+    <license>itshangchao@qq.com</license>
+    <description>用于转换文本编码格式的QtCreator插件。</description>
+    <url>https://github.com/ITShang/TransCodePlugin</url>
+    $$dependencyList
+</plugin>
+
