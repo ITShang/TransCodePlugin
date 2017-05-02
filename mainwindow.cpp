@@ -221,12 +221,14 @@ void MainWindow::addNewDir(bool)
 {
     QString path = QFileDialog::getExistingDirectory(this,
                                                  tr("选择文件夹"),
-                                                 LastDirPath);
+                                                 LastDirPath,QFileDialog::ReadOnly);
     if(path == NULL)
     {
         return;
     }
     LastDirPath = path;
+    targetFilePath = path;
+    ui->targetFilePath->setText(targetFilePath);
     setUiStatus(QObject::tr("选择文件夹:%1").arg(LastDirPath));
     QDir dir(path);
 
