@@ -297,22 +297,22 @@ QVariant MyTableModel::headerData(int section, Qt::Orientation orientation, int 
             switch(section)
             {
             case 1:
-                return QObject::tr("文件名");
+                return QObject::tr("Name");
                 break;
             case 2:
-                return QObject::tr("文件类型");
+                return QObject::tr("Type");
                 break;
             case 3:
-                return QObject::tr("源文件编码");
+                return QObject::tr("Soutce Code");
                 break;
             case 4:
-                return QObject::tr("转换编码");
+                return QObject::tr("Target Code");
                 break;
             case 5:
-                return QObject::tr("文件大小");
+                return QObject::tr("Size");
                 break;
             case 6:
-                return QObject::tr("文件路径");
+                return QObject::tr("Path");
                 break;
             }
         }

@@ -14,10 +14,10 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>PreView File Dialog</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="image.qrc">
+   <iconset>
     <normaloff>:/images/my/005.png</normaloff>:/images/my/005.png</iconset>
   </property>
   <property name="sizeGripEnabled">
@@ -47,7 +47,7 @@
         <item>
          <widget class="QLabel" name="label_2">
           <property name="text">
-           <string>设置读取格式：</string>
+           <string>Set Source Code:</string>
           </property>
          </widget>
         </item>
@@ -72,7 +72,7 @@
         <item>
          <widget class="QLabel" name="label">
           <property name="text">
-           <string>设置输出格式：</string>
+           <string>set Target Code:</string>
           </property>
          </widget>
         </item>
@@ -108,7 +108,7 @@
       <item>
        <widget class="QPushButton" name="add">
         <property name="text">
-         <string>添加</string>
+         <string>Add</string>
         </property>
        </widget>
       </item>
@@ -120,8 +120,6 @@
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="image.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

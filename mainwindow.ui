@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>文本格式转换工具</string>
+   <string>Trans File Code </string>
   </property>
   <property name="windowIcon">
    <iconset>
@@ -395,14 +395,14 @@ QComboBox QAbstractItemView::item::hover
              <item>
               <widget class="QCheckBox" name="selectAll">
                <property name="text">
-                <string>全选</string>
+                <string>Select All</string>
                </property>
               </widget>
              </item>
              <item>
               <widget class="QCheckBox" name="selectAllOther">
                <property name="text">
-                <string>反选</string>
+                <string>Inverse</string>
                </property>
               </widget>
              </item>
@@ -469,7 +469,7 @@ QComboBox QAbstractItemView::item::hover
                    </size>
                   </property>
                   <property name="text">
-                   <string>一键设置目标编码格式</string>
+                   <string>Set All Same Code</string>
                   </property>
                   <property name="autoDefault">
                    <bool>true</bool>
@@ -531,7 +531,7 @@ QComboBox QAbstractItemView::item::hover
              <item>
               <widget class="QLabel" name="label">
                <property name="text">
-                <string>文件输出路径：</string>
+                <string>Target File Path:</string>
                </property>
               </widget>
              </item>
@@ -554,7 +554,7 @@ QComboBox QAbstractItemView::item::hover
                 <string notr="true"/>
                </property>
                <property name="text">
-                <string>打开</string>
+                <string>Open</string>
                </property>
                <property name="autoDefault">
                 <bool>true</bool>
@@ -584,7 +584,7 @@ QComboBox QAbstractItemView::item::hover
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>26</height>
+     <height>23</height>
     </rect>
    </property>
   </widget>

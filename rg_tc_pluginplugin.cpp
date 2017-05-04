@@ -16,6 +16,7 @@
 #include <QMenu>
 
 #include <QtPlugin>
+#include <QApplication>
 
 using namespace RG_TC_Plugin::Internal;
 
@@ -23,6 +24,8 @@ RG_TC_PluginPlugin::RG_TC_PluginPlugin()
 {
     // Create your members
     widget = NULL;
+    appTranslator.load(tr("rg_tc_zh_ZN.qm"),tr("://"));
+    QApplication::installTranslator(&appTranslator);
 }
 
 RG_TC_PluginPlugin::~RG_TC_PluginPlugin()
@@ -49,31 +52,31 @@ bool RG_TC_PluginPlugin::initialize(const QStringList &arguments, QString *error
     QTextCodec::setCodecForCStrings(code);
     QTextCodec::setCodecForTr(code);
 
-    QAction *action = new QAction(tr("转换视图"), this);
+    QAction *action = new QAction(tr("TransView"), this);
     Core::Command *cmd = Core::ActionManager::registerAction(action, Constants::ACTION_ID,
                                                              Core::Context(Core::Constants::C_GLOBAL));
     connect(action, SIGNAL(triggered()), this, SLOT(triggerAction()));
 
     //转换为UTF8
-    QAction *action_utf8 = new QAction(tr("转换为 UTF8"), this);
+    QAction *action_utf8 = new QAction(tr("To UTF8"), this);
     Core::Command *tUTF8 = Core::ActionManager::registerAction(action_utf8, Constants::ACTION_ID_UTF8,
                                                              Core::Context(Core::Constants::C_GLOBAL));
     connect(action_utf8, SIGNAL(triggered()), this, SLOT(transToUTF8()));
 
     //转换为GB2312
-    QAction *action_gb2312 = new QAction(tr("转换为 Gb2312"), this);
+    QAction *action_gb2312 = new QAction(tr("To Gb2312"), this);
     Core::Command *tGB2312 = Core::ActionManager::registerAction(action_gb2312, Constants::ACTION_ID_GB2312,
                                                              Core::Context(Core::Constants::C_GLOBAL));
     connect(action_gb2312, SIGNAL(triggered()), this, SLOT(transToGB2312()));
 
     //添加直接转换编码列表
     Core::ActionContainer *menuList = Core::ActionManager::createMenu(Constants::MENU_ID_CODE_LIST);
-    menuList->menu()->setTitle(tr("转换当前文件"));
+    menuList->menu()->setTitle(tr("Trans Curr File"));
     menuList->addAction(tUTF8);
     menuList->addAction(tGB2312);
 
     Core::ActionContainer *menu = Core::ActionManager::createMenu(Constants::MENU_ID);
-    menu->menu()->setTitle(tr("编码转换"));
+    menu->menu()->setTitle((tr("Trans Code")));
     menu->addAction(cmd);
     menu->addMenu(menuList);
     Core::ActionManager::actionContainer(Core::Constants::M_TOOLS)->addMenu(menu);

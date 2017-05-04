@@ -6,6 +6,7 @@
 #include <extensionsystem/iplugin.h>
 
 class MainWindow;
+#include <QTranslator>
 
 namespace RG_TC_Plugin {
 namespace Internal {
@@ -34,6 +35,7 @@ private slots:
 
 private:
     MainWindow * widget;
+    QTranslator appTranslator;
 };
 
 } // namespace Internal

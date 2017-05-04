@@ -29,7 +29,7 @@ isEmpty(QTCREATOR_SOURCES):QTCREATOR_SOURCES=E:/Qt/Tools/qt-creator-2.8.0-src
 
 ## set the QTC_BUILD environment variable to override the setting here
 IDE_BUILD_TREE = $$(QTC_BUILD)
-isEmpty(IDE_BUILD_TREE):IDE_BUILD_TREE=E:/Qt/485Compile/VS2010/rcreator
+isEmpty(IDE_BUILD_TREE):IDE_BUILD_TREE=E:/Qt/485Compile/MinGW/rcreator
 
 ## uncomment to build plugin into user config directory
 ## <localappdata>/plugins/<ideversion>
@@ -48,7 +48,11 @@ FORMS += \
     mainwindow.ui
 
 RESOURCES += \
-    image.qrc
+    image.qrc \
+    qmapp.qrc
+
+TRANSLATIONS += rg_tc_zh_ZN.ts
+
 
 #DEFINES += QT_NO_CAST_FROM_ASCII \
 #           QT_NO_CAST_TO_ASCII

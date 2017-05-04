@@ -18,6 +18,7 @@
 #include <QDesktopServices>
 #include <QUrl>
 #include <QLabel>
+#include <QTextCodec>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -85,11 +86,11 @@ void MainWindow::initConnect()
 //初始化界面的控件提示信息
 void MainWindow::initToolTips()
 {
-    ui->addNewFile->setToolTip(tr("打开文件"));
-    ui->addDir->setToolTip(tr("打开文件夹"));
-    ui->deleteFileItem->setToolTip(tr("删除文件"));
-    ui->setLocalLook->setToolTip(tr("查看文件内容"));
-    ui->startTransCode->setToolTip(tr("开始转换选中的文件"));
+    ui->addNewFile->setToolTip(QObject::tr("Open File"));
+    ui->addDir->setToolTip(QObject::tr("Open Folder"));
+    ui->deleteFileItem->setToolTip(QObject::tr("Delete File"));
+    ui->setLocalLook->setToolTip(QObject::tr("View File"));
+    ui->startTransCode->setToolTip(QObject::tr("Start Trans"));
 }
 
 //初始化数据成员
@@ -142,18 +143,18 @@ void MainWindow::addNewFile(bool)
             formatContent += QObject::tr(";;");
         }
     }
-    setUiStatus(QObject::tr("选择文件"));
-    QStringList fileNames = QFileDialog::getOpenFileNames(this,tr("选择文件"),
+    setUiStatus(QObject::tr("Select File"));
+    QStringList fileNames = QFileDialog::getOpenFileNames(this,QObject::tr("Select File"),
                                                     LastFilePath,
                                                     formatContent);
 
     if(fileNames.isEmpty())
     {
-        setUiStatus(QObject::tr("未选择文件"));
+        setUiStatus(QObject::tr("No File Select"));
     }
     else
     {
-        setUiStatus(QString(QObject::tr("选择了%1个文件")).arg(fileNames.count()));
+        setUiStatus(QString(QObject::tr("Selected %1 File")).arg(fileNames.count()));
     }
 
     int insertNums=0;
@@ -165,7 +166,7 @@ void MainWindow::addNewFile(bool)
             if (!file.open(QFile::ReadOnly))
             {
                 QMessageBox::warning(this, QObject::tr("Codecs"),
-                                     QObject::tr("未能正常打开文件: %1:\n%2")
+                                     QObject::tr("Can't Open File: %1:\n%2")
                                      .arg(fileName)
                                      .arg(file.errorString()));
                 return;
@@ -185,13 +186,13 @@ void MainWindow::addNewFile(bool)
                 QFileInfo info(file);
                 if(checkSameFileOpened(info))
                 {
-                    QMessageBox::warning(this,QObject::tr("提示"),
-                                         QObject::tr("文件%1已经添加:").arg(file.fileName()));
+                    QMessageBox::warning(this,QObject::tr("Information"),
+                                         QObject::tr("Add A New File:%1:").arg(file.fileName()));
                     return;
                 }
 
                 insertNums++;
-                setUiStatus(QObject::tr("添加文件到列表：%1").arg(info.absoluteFilePath()));
+                setUiStatus(QObject::tr("Add A New File to Trans List:%1").arg(info.absoluteFilePath()));
                 TransFile *tFile = new TransFile;
                 tFile->isSelected = Qt::Unchecked;
                 tFile->fileName = info.baseName();
@@ -213,14 +214,14 @@ void MainWindow::addNewFile(bool)
         ui->selectAll->setEnabled(true);
         ui->selectAllOther->setEnabled(true);
     }
-    setUiStatus(QObject::tr("添加了%1个文件到列表").arg(insertNums));
+    setUiStatus(tr("Add %1 Files To Trans List").arg(insertNums));
 }
 
 //添加一个文件夹
 void MainWindow::addNewDir(bool)
 {
     QString path = QFileDialog::getExistingDirectory(this,
-                                                 tr("选择文件夹"),
+                                                 tr("Select Folder"),
                                                  LastDirPath,QFileDialog::ReadOnly);
     if(path == NULL)
     {
@@ -229,7 +230,7 @@ void MainWindow::addNewDir(bool)
     LastDirPath = path;
     targetFilePath = path;
     ui->targetFilePath->setText(targetFilePath);
-    setUiStatus(QObject::tr("选择文件夹:%1").arg(LastDirPath));
+    setUiStatus(tr("Select Folder:%1").arg(LastDirPath));
     QDir dir(path);
 
     int insertNums=0;
@@ -243,8 +244,8 @@ void MainWindow::addNewDir(bool)
         QFile file(fileName);
         if (!file.open(QFile::ReadOnly))
         {
-            QMessageBox::warning(this, QObject::tr("Codecs"),
-                                 QObject::tr("未能正常打开文件 %1:\n%2")
+            QMessageBox::warning(this, QObject::tr("Information"),
+                                 QObject::tr("Can't Open File: %1:\n%2")
                                  .arg(fileName)
                                  .arg(file.errorString()));
             return;
@@ -262,7 +263,7 @@ void MainWindow::addNewDir(bool)
             QFileInfo info(file);
             if(checkSameFileOpened(info))
             {
-                QMessageBox::warning(this,QObject::tr("提示"),QObject::tr("文件已经添加！"));
+                QMessageBox::warning(this,QObject::tr("Information"),QObject::tr("File has added"));
                 return;
             }
 
@@ -334,7 +335,7 @@ bool MainWindow::checkSameFileOpened(QFileInfo info)
 void MainWindow::deleteFile(bool)
 {
    int num = model->removeMyDatas();
-   setUiStatus(QObject::tr("删除%1个条目").arg(num));
+   setUiStatus(QObject::tr("Delete %1 Items").arg(num));
 
    checkIsSelectedItem();
    if(model->getFileList().count()<=0)
@@ -353,9 +354,9 @@ void MainWindow::setTargetFilePath(bool)
 {
     if(targetFilePath != NULL)
     {
-        setUiStatus(QObject::tr("设置默认存储路径"));
+        setUiStatus(QObject::tr("Set Defult Target File Path"));
         QString path =  QFileDialog::getExistingDirectory(this,
-                                                          tr("设置文件输出路径"),
+                                                          QObject::tr("Set Defult Path"),
                                                           targetFilePath);
         if(path == NULL)
         {
@@ -375,7 +376,7 @@ void MainWindow::setDefaultTargetPath()
 {
     targetFilePath = QDir::currentPath();
     ui->targetFilePath->setText(targetFilePath);
-    setUiStatus(QObject::tr("设置默认存储路径:%1").arg(targetFilePath));
+    setUiStatus(QObject::tr("Set Defult Path:%1").arg(targetFilePath));
 }
 
 //设置状态提示栏的实时显示内容
@@ -406,8 +407,8 @@ void MainWindow::startTransFileCode(bool)
             int result = 0;
             if(checkFileExited(tFile))
             {
-                if(QMessageBox::Ok == QMessageBox::warning(this,tr("提示"),
-                                                           tr("文件已经存在，是否覆盖原文件？"),
+                if(QMessageBox::Ok == QMessageBox::warning(this,QObject::tr("Information"),
+                                                           QObject::tr("File Is Exited,Do You Want To OverRide This File?"),
                                                            QMessageBox::Ok,QMessageBox::Cancel))
                 {
                     result = 1;
@@ -451,20 +452,14 @@ void MainWindow::startTransFileCode(bool)
 
     if(index == 0)
     {
-        QMessageBox::warning(this,
-                             QObject::tr("提示"),
-                             QObject::tr("没有选择需要转换的文件"));
+        QMessageBox::warning(this,QObject::tr("Information"),QObject::tr("Not Select Trans File"));
     }
     else
     {
-        QMessageBox::information(this,
-                                 QObject::tr("提示"),
-                                 QObject::tr("成功转换%1个文件,文件存放路径：\n%2")
-                                 .arg(index)
-                                 .arg(targetFilePath));
+        QMessageBox::information(this,QObject::tr("Information"),QObject::tr("Success Trans %1 File,File Path:\n%2").arg(index).arg(targetFilePath));
     }
     clearTransSuccList();
-    setUiStatus(QString(QObject::tr("成功转换%1个文件")).arg(index));
+    setUiStatus(QString(QObject::tr("Success Trans %1 File")).arg(index));
 }
 
 //调用本地默认的软件打开文件
@@ -473,7 +468,7 @@ void MainWindow::setLocalLook(bool)
     int row = ui->fileTableView->currentIndex().row();
     if(row<0)
     {
-        setUiStatus(QObject::tr("未选择对应的预览文件"));
+        setUiStatus(QObject::tr("No File Selected To View"));
         return;
     }
     QString fileAbPath = model->getFileList().at(row)->fileAbPath;
@@ -486,24 +481,24 @@ void MainWindow::setLocalLook(bool)
         bool r = icemProcess->startDetached(bash,arguments);
         if(r == false)
         {
-            QMessageBox::warning(this,tr("提示"),tr("未能正确打开文件，请联系开发人员"));
-            setUiStatus(QObject::tr("未能正常浏览文件"));
+            QMessageBox::warning(this,QObject::tr("Information"),QObject::tr("Can't Open File,Please call Author"));
+            setUiStatus(QObject::tr("Can't View File Success"));
         }
         else
         {
-            setUiStatus(QObject::tr("浏览文件内容:%1").arg(fileAbPath));
+            setUiStatus(QObject::tr("View File:%1").arg(fileAbPath));
         }
     #else
         QDesktopServices look;
         bool r = look.openUrl(QUrl(fileAbPath));
         if(r == false)
         {
-            QMessageBox::warning(this,tr("提示"),tr("未能正确打开文件，请联系开发人员"));
-            setUiStatus(QObject::tr("未能正常浏览文件"));
+            QMessageBox::warning(this,tr("Information"),tr("Can't Open File,Please call Author"));
+            setUiStatus(QObject::tr("Can't View File Success"));
         }
         else
         {
-            setUiStatus(QObject::tr("浏览文件内容:%1").arg(fileAbPath));
+            setUiStatus(QObject::tr("View File:%1").arg(fileAbPath));
         }
     #endif
 
@@ -548,7 +543,7 @@ void MainWindow::selectAllItems(bool bl)
     }
     model->selectAll(state);
     checkIsSelectedItem();
-    setUiStatus(QObject::tr("全选"));
+    setUiStatus(QObject::tr("Selected All"));
 }
 
 //点击反选

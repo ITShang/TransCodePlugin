@@ -28,8 +28,8 @@ void TransCurrCode::transCurrFileCode()
     QFile file(fileName);
     if (!file.open(QFile::ReadOnly))
     {
-        QMessageBox::warning(0, QObject::tr("提示"),
-                             QObject::tr("未能正常打开文件"));
+        QMessageBox::warning(0, QObject::tr("Information"),
+                             QObject::tr("Can't Open File"));
         return;
     }
 
